@@ -12,7 +12,7 @@ verifyToken = (req, res, next) => {
     });
   }
 
-  jwt.verify(JSON.parse(token), config.secret, (err, decoded) => {
+  jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
         message: "Unauthorized!"
