@@ -89,7 +89,6 @@ exports.findAll = (req, res) => {
 // Find a single Character with an id
 exports.findOne = (req, res) => {
   const id = req.params.character_id;
-
   character.findByPk(id)
     .then(data => {
       res.send(data);

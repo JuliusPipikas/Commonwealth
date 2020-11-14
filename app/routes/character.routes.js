@@ -2,12 +2,14 @@ module.exports = app => {
     const characters = require("../controllers/character.controller.js");
   
     var router = require("express").Router();
+
+    const {verify} = require('./middleware')
   
     // Create a new Character
     router.post("/", characters.create);
   
     // Retrieve all Characters
-    router.get("/", characters.findAll);
+    router.get("/", verify, characters.findAll);
   
     // Retrieve all Characters of one player
     router.get("/oneplayer/:player_id", characters.findAllOfPlayer);

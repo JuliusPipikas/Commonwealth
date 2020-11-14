@@ -22,7 +22,7 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Julius' application." });
+  res.json({ message: "Welcome to the Commonwealth!" });
 });
 
 require("./app/routes/character.routes")(app);
@@ -34,3 +34,18 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+// https://livecodestream.dev/post/2020-08-11-a-practical-guide-to-jwt-authentication-with-nodejs/
+
+require('dotenv').config();
+const cookieParser = require('cookie-parser')
+
+const {login, refresh} = require('./authentication')
+app.use(bodyParser.json())
+app.use(cookieParser())
+
+app.post('/login', login)
+app.post('/refresh', refresh)
+
+//=======================================
+
