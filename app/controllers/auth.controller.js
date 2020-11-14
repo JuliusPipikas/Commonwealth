@@ -16,9 +16,6 @@ exports.signup = (req, res) => {
     
   })
   
-  .then
-  
-  
   .catch(err => {
     res.status(500).send({ message: err.message });
 });
