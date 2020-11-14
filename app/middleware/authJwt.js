@@ -19,19 +19,15 @@ verifyToken = (req, res, next) => {
       });
     }
     req.user_id = decoded.id;
+    console.log("========")
+    console.log(req.user_id)
+    console.log("========")
     next();
   });
 };
 
 isAdmin = (req, res, next) => {
   User.findByPk(req.user_id).then(user => {
-    console.log(req)
-    console.log("===");
-    console.log(req.body)
-    console.log("===");
-    console.log(req.query)
-    console.log("===");
-    console.log(req.params)
     if(user.role == 2){
       next();
       return;
