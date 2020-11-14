@@ -40,12 +40,11 @@ app.listen(PORT, () => {
 require('dotenv').config();
 const cookieParser = require('cookie-parser')
 
-const {login, refresh} = require('./authentication')
-app.use(bodyParser.json())
+const {login, refresh} = require('./app/authentication/controller.js')
 app.use(cookieParser())
 
 app.post('/login', login)
-app.post('/refresh', refresh)
+//app.post('/refresh', refresh)
 
 //=======================================
 
