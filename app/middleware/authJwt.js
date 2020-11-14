@@ -18,7 +18,7 @@ verifyToken = (req, res, next) => {
         message: "Unauthorized!"
       });
     }
-    req.user_id = decoded.id;
+    req.user_id = decoded.user_id;
     console.log("========")
     console.log(req.user_id)
     console.log("========")
