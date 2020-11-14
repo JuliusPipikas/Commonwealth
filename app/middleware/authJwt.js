@@ -24,7 +24,8 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
+  User.findByPk(req.user_id).then(user => {
+    console.log(req.user_id)
     if(user.role == 2){
       next();
       return;
