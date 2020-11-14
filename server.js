@@ -28,23 +28,12 @@ app.get("/", (req, res) => {
 require("./app/routes/character.routes")(app);
 require("./app/routes/player.routes")(app);
 require("./app/routes/location.routes")(app);
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-// https://livecodestream.dev/post/2020-08-11-a-practical-guide-to-jwt-authentication-with-nodejs/
-
-require('dotenv').config();
-const cookieParser = require('cookie-parser')
-
-const {login, refresh} = require('./app/authentication/controller.js')
-app.use(cookieParser())
-
-app.post('/login', login)
-//app.post('/refresh', refresh)
-
-//=======================================
 
