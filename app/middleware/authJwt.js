@@ -25,7 +25,17 @@ verifyToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+    if(user.role == 2){
+      next();
+      return;
+    }
+
+    res.status(403).send({
+      message: "Require Admin Role!"
+    });
+    return;
+    
+    /*user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "admin") {
           next();
@@ -33,17 +43,24 @@ isAdmin = (req, res, next) => {
         }
       }
 
-      res.status(403).send({
-        message: "Require Admin Role!"
-      });
-      return;
-    });
+      
+    });*/
   });
 };
 
 isUser = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+    if(user.role == 1){
+      next();
+      return;
+    }
+
+    res.status(403).send({
+      message: "Require User Role!"
+    });
+    return;
+    
+    /*user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "user") {
           next();
@@ -54,14 +71,30 @@ isUser = (req, res, next) => {
       res.status(403).send({
         message: "Require User Role!"
       });
-    });
+    });*/
   });
 };
 
 isUserOrAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
+      
+      if(user.role == 2){
+        next();
+        return;
+      }
+
+      if(user.role == 1){
+        next();
+        return;
+      }
+  
+      res.status(403).send({
+        message: "Require User or Admin Role!"
+      });
+      return;
+      
+      /*for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "user") {
           next();
           return;
@@ -75,7 +108,7 @@ isUserOrAdmin = (req, res, next) => {
 
       res.status(403).send({
         message: "Require User or Admin Role!"
-      });
+      });*/
     });
   });
 };
