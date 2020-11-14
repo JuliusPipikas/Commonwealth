@@ -18,13 +18,13 @@ verifyToken = (req, res, next) => {
         message: "Unauthorized!"
       });
     }
-    req.user.user_id = decoded.id;
+    req.user_id = decoded.id;
     next();
   });
 };
 
 isAdmin = (req, res, next) => {
-  User.findByPk(req.user.user_id).then(user => {
+  User.findByPk(req.user_id).then(user => {
     if(user.role == 2){
       next();
       return;
@@ -49,7 +49,7 @@ isAdmin = (req, res, next) => {
 };
 
 isUser = (req, res, next) => {
-  User.findByPk(req.user.user_id).then(user => {
+  User.findByPk(req.user_id).then(user => {
     if(user.role == 1){
       next();
       return;
@@ -76,7 +76,7 @@ isUser = (req, res, next) => {
 };
 
 isUserOrAdmin = (req, res, next) => {
-  User.findByPk(req.user.user_id).then(user => {
+  User.findByPk(req.user_id).then(user => {
     user.getRoles().then(roles => {
       
       if(user.role == 2){
