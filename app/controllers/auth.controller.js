@@ -13,16 +13,18 @@ exports.signup = (req, res) => {
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 8),
     role: req.body.role
+    
   })
-    .then(user => {
+  res.send({ message: "User was registered successfully!"});
+    /*.then(user => {
         if(user){
-            res.send({ message: "User was registered successfully!"});
+            
         }
     })
     
     .catch(err => {
         res.status(500).send({ message: err.message });
-    });
+    });*/
 
 };
 
