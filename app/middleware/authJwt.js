@@ -19,7 +19,7 @@ verifyToken = (req, res, next) => {
       });
     }
     console.log("========")
-    console.log(decoded.user_id)
+    console.info(decoded)
     console.log("========")
     req.user_id = decoded.user_id;
     
