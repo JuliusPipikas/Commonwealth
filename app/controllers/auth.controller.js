@@ -14,7 +14,9 @@ exports.signup = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8),
     role: req.body.role
     
-  })
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+});
   
   /*  .then(user => {
         if(user){
@@ -22,9 +24,7 @@ exports.signup = (req, res) => {
         }
     })
     
-    .catch(err => {
-        res.status(500).send({ message: err.message });
-    });*/
+    */
 
 };
 
