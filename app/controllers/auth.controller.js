@@ -15,16 +15,16 @@ exports.signup = (req, res) => {
     role: req.body.role
     
   })
-  res.send({ message: "User was registered successfully!"});
-    /*.then(user => {
+  
+    .then(user => {
         if(user){
-            
+            res.send({ message: "User was registered successfully!"});
         }
     })
     
     .catch(err => {
         res.status(500).send({ message: err.message });
-    });*/
+    });
 
 };
 
