@@ -16,7 +16,7 @@ exports.signup = (req, res) => {
     
   })
   
-    .then(user => {
+  /*  .then(user => {
         if(user){
             res.send({ message: "User was registered successfully!"});
         }
@@ -24,7 +24,7 @@ exports.signup = (req, res) => {
     
     .catch(err => {
         res.status(500).send({ message: err.message });
-    });
+    });*/
 
 };
 
