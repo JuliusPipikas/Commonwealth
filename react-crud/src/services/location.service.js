@@ -5,28 +5,28 @@ class LocationDataService {
     return http.get("/locations");
   }
 
-  get(id) {
-    return http.get(`/locations/${id}`);
+  get(location_id) {
+    return http.get(`/locations/${location_id}`);
   }
 
   create(data) {
     return http.post("/locations", data);
   }
 
-  update(id, data) {
-    return http.put(`/locations/${id}`, data);
+  update(location_id, data) {
+    return http.put(`/locations/${location_id}`, data);
   }
 
-  delete(id) {
-    return http.delete(`/locations/${id}`);
+  delete(location_id) {
+    return http.delete(`/locations/${location_id}`);
   }
 
   deleteAll() {
     return http.delete(`/locations`);
   }
 
-  findByName(name) {
-    return http.get(`/locations?name=${name}`);
+  findByName(location_name) {
+    return http.get(`/locations?name=${location_name}`);
   }
 }
 
