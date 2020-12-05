@@ -54,7 +54,7 @@ exports.findOne = (req, res) => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({
+      res.status(404).send({
         message: "Error retrieving Location with id=" + id
       });
     });
@@ -75,7 +75,6 @@ exports.update = (req, res) => {
       } else {
         res.status(404).send({
           message: `Cannot update Location with id=${id}. Maybe Location was not found or req.body is empty!`
-        //pataisyt status koda i 404
         });
       }
     })
@@ -99,7 +98,7 @@ exports.delete = (req, res) => {
           message: "Location was deleted successfully!"
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot delete Location with id=${id}. Maybe Location was not found!`
         });
       }

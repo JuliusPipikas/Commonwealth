@@ -113,7 +113,7 @@ exports.update = (req, res) => {
           message: "Character was updated successfully."
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot update Character with id=${id}. Maybe Character was not found or req.body is empty!`
         });
       }
@@ -138,7 +138,7 @@ exports.delete = (req, res) => {
           message: "Character was deleted successfully!"
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot delete Character with id=${id}. Maybe Character was not found!`
         });
       }
