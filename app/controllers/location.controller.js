@@ -73,8 +73,9 @@ exports.update = (req, res) => {
           message: "Location was updated successfully."
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot update Location with id=${id}. Maybe Location was not found or req.body is empty!`
+        //pataisyt status koda i 404
         });
       }
     })

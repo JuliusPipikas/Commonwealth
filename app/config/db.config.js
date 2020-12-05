@@ -19,7 +19,7 @@
     DB: "we58s3dpo8niwfii",
     PORT: "3306",
     dialect: "mysql",
-    pool: { // DAR NEZINAU KA DARO
+    pool: {
       max: 5,
       min: 0,
       acquire: 30000,
