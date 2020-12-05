@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
       discord_id: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      user_id: {
+        type: Sequelize.INTEGER
       }
     }
     ,{timestamps: false}

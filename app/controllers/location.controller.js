@@ -47,15 +47,15 @@ exports.findAll = (req, res) => {
 
 // Find a single Location with an id
 exports.findOne = (req, res) => {
-  const id = req.params.location_id;
+  const location_id = req.params.location_id;
 
-  location.findByPk(id)
+  location.findByPk(location_id)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(404).send({
-        message: "Error retrieving Location with id=" + id
+        message: "Error retrieving Location with id=" + location_id
       });
     });
 };

@@ -23,13 +23,20 @@ exports.create = (req, res) => {
     });
     return;
   }
+  else if (!req.body.user_id) {
+    res.status(400).send({
+      message: "Player needs a user ID!"
+    });
+    return;
+  }
 
   // Create a Player
   const Player = {
     player_id: req.body.player_id,
     player_name: req.body.player_name,
     player_rank: req.body.player_rank,
-    discord_id: req.body.discord_id
+    discord_id: req.body.discord_id,
+    user_id: req.body.user_id
   };
 
   // Save Player in the database
