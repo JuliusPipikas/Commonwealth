@@ -22,9 +22,14 @@ const db = require("./app/models");
 db.sequelize.sync();
 
 // simple route
-/*app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Commonwealth!" });
+/*app.get("/*", (req, res) => {
+  //res.json({ message: "Welcome to the Commonwealth!" });
+  res.App(req, )
 });*/
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+ });
 
 require("./app/routes/character.routes")(app);
 require("./app/routes/player.routes")(app);
