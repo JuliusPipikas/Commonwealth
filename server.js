@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+//const path = require('path');
 
 const app = express();
 
@@ -22,14 +23,15 @@ const db = require("./app/models");
 db.sequelize.sync();
 
 // simple route
-/*app.get("/*", (req, res) => {
-  //res.json({ message: "Welcome to the Commonwealth!" });
-  res.App(req, )
-});*/
-
 app.get("/", (req, res) => {
+  //res.json({ message: "Welcome to the Coooommonwealth!" });
   res.sendFile(path.join(__dirname, "./commonwealth-frontend/public", "index.html"));
- });
+  //res.App(req, )
+});
+
+/*app.get("/", (req, res) => {
+  
+ });*/
 
 require("./app/routes/character.routes")(app);
 require("./app/routes/player.routes")(app);

@@ -10,7 +10,7 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/test/all", controller.allAccess);
+  app.get("/api/test/all", controller.allAccess);
 
   /*app.get(
     "/api/test/user",
@@ -19,13 +19,13 @@ module.exports = function(app) {
   );*/
 
   app.get(
-    "/test/user",
+    "/api/test/user",
     [authJwt.verifyToken, authJwt.isUser],
     controller.userBoard
   );
 
   app.get(
-    "/test/admin",
+    "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
