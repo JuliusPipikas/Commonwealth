@@ -22,13 +22,6 @@ const db = require("./app/models");
 
 db.sequelize.sync();
 
-// simple route
-/*app.get("/", (req, res) => {
-  //res.json({ message: "Welcome to the Coooommonwealth!" });
-  res.sendFile(path.join(__dirname, "commonwealth-frontend", "build", "index.html"));
-  //res.App(req, )
-});*/
-
 let root = path.join(__dirname, 'commonwealth-frontend', 'build');
 app.use(express.static(root));
 app.use(function(req, res, next) {
@@ -37,10 +30,6 @@ if (req.method === 'GET' && req.accepts('html') && !req.is('json') &&
    res.sendFile('index.html', { root });
  } else next();
  });
-
-/*app.get("/", (req, res) => {
-  
- });*/
 
 require("./app/routes/character.routes")(app);
 require("./app/routes/player.routes")(app);
