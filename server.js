@@ -28,7 +28,7 @@ db.sequelize.sync();
 });*/
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "./commonwealth-frontend/public", "index.html"));
  });
 
 require("./app/routes/character.routes")(app);
