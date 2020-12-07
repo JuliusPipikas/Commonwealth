@@ -5,8 +5,8 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  //origin: "http://localhost:8081"
-  origin: "https://drumian-commonwealth.herokuapp.com/"
+  origin: "http://localhost:8081"
+  //origin: "https://drumian-commonwealth.herokuapp.com/"
 };
 
 app.use(cors(corsOptions));
