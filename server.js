@@ -33,7 +33,7 @@ let root = path.join(__dirname, 'commonwealth-frontend', 'build');
 app.use(express.static(root));
 app.use(function(req, res, next) {
 if (req.method === 'GET' && req.accepts('html') && !req.is('json') && 
- !req.path.includes('.')) {
+ !req.path.includes('api')) {
    res.sendFile('index.html', { root });
  } else next();
  });
