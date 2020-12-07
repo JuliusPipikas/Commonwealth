@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete a Character with id
     router.delete("/:player_id", players.delete);
   
-    app.use('/api/players', router);
+    app.use('/players', router);
   };

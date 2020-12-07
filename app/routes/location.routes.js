@@ -18,5 +18,5 @@ module.exports = app => {
     // Delete a Character with id
     router.delete("/:location_id", locations.delete);
   
-    app.use('/api/locations', router);
+    app.use('/locations', router);
   };
