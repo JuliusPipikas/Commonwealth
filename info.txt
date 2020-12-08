@@ -1,0 +1,3 @@
+outer package.json:
+,
+    "heroku-postbuild": "cd commonwealth-frontend && npm install && npm run build"
