@@ -54,7 +54,7 @@ isAdmin = (req, res, next) => {
 
 isUser = (req, res, next) => {
   User.findByPk(req.user_id).then(user => {
-    if(user.role == 1){
+    if(user.role >= 1){
       next();
       return;
     }
