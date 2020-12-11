@@ -5,7 +5,7 @@ const User = db.user;
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
-
+  console.log(token);
   if (!token) {
     return res.status(403).send({
       message: "No token provided!"
@@ -54,6 +54,7 @@ isAdmin = (req, res, next) => {
 
 isUser = (req, res, next) => {
   User.findByPk(req.user_id).then(user => {
+    console.log(user.role);
     if(user.role >= 1){
       next();
       return;

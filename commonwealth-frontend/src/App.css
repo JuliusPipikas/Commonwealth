@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
 .App {
   text-align: center;
 }
@@ -11,6 +13,12 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.navbar-light .navbar-nav .nav-link{
+  color: white !important;
+  
+  font-family: 'Medieval Sharp' !important;
 }
 
 .App-header {
@@ -37,10 +45,177 @@
   }
 }
 
+
+.characterTabUp{
+  padding-top: 0px;
+}
+
+.characterList{
+  min-width: 300px !important;
+}
+
+.carousel-caption{
+  position:static !important;
+}
+
+.jumbotron{
+  padding: 10px;
+}
+
+.characterTab{
+  margin: 15px;
+  border: 2px solid #282c34;
+  border-radius: 10px;
+  width: 80%;
+  min-width: 300px;
+}
+
+.characterElement{
+  text-indent: 10%;
+}
+
+.carousel-inner {
+  background-color: white !important;
+  }
+
+.active-carousel {
+  background-color: white !important;
+}
+
+.btn-warning, .btn-primary {
+  border-color: #b71c1c;
+  background-color:#b71c1c;
+  color: #ffffff;
+}
+
+.btn-warning:hover, .btn-warning:active, .btn-warning:target, .btn-primary:hover, .btn-primary:active, .btn-primary:target  {
+  border-color: #911717 !important;
+  background-color:#911717 !important;
+  color: #ffffff !important;
+}
+
+.btn-success:hover, .btn-success:active, .btn-success:target {
+  background-color: #c29543 !important;
+  border-color: #c29543 !important;
+  color: #ffffff !important;
+}
+
+.badge-warning {
+  border-color: #b71c1c;
+  background-color:#b71c1c;
+  color: #ffffff;
+}
+
+.navbar-toggler{
+  border-color: white !important;
+  color: white !important;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+  font-size: xx-large;
+  font-family: 'Medieval Sharp' !important;
+}
+
+.navbar {
+  background-color: #b71c1c !important;
+}
+
+.form-control{
+  border-color: black !important;
+  color: black !important;
+}
+
+.pushh4 {
+  padding-top: 10px !important;
+}
+
+.pushh4more {
+  padding-top: 30px !important;
+}
+
+#car .btn-warning{
+  margin-top: 10px !important;
+}
+
+.nav-link{
+  padding-left: 0;
+
+}
+
+#pushleft .nav-link{
+  color:  #ffffff !important;
+  padding: 0px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-inner .active{
+  background-color: white !important;
+  border-color: black !important;
+}
+
+.carousel-control-prev-icon {background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23b71c1c' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); }
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23b71c1c' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel .carousel-item{
+  padding-left: 160px !important;
+  height: 350px !important;
+}
+
+.btn-success{
+  background-color: #ddab4d !important;
+  border-color: #ddab4d !important;
+}
+
+.badge-success{
+  background-color: #ddab4d !important;
+}
+
+#car .active {
+  background-color: white !important;
+  border-color: rgba(183, 28, 28, 0)!important;
+}
+
+.carousel-indicators {
+  background-color: rgba(183, 28, 28, 0.7)!important;
+}
+
+.active {
+  background-color: rgb(183, 28, 28) !important;
+  border-color:#b71c1c !important;
+}
+
+
+.characterButtonRight{
+  padding-bottom: 15px;
+  padding-left: 230px;
+}
+
+.characterButtonRight2{
+  padding-bottom: 15px;
+  padding-left: 210px;
+}
+
+
 .list {
   text-align: left;
   max-width: 750px;
   margin: auto;
+}
+
+.col-xs-6{
+  padding: 10px 10px;
+  min-width: 200px;
+}
+
+.col-xs-4{
+  padding: 25px 0px;
+  
 }
 
 .submit-form {

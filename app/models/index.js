@@ -21,6 +21,5 @@ db.sequelize = sequelize;
 
 db.character = require("./character.model.js")(sequelize, Sequelize);
 db.location = require("./location.model.js")(sequelize, Sequelize);
-db.player = require("./player.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 module.exports = db;

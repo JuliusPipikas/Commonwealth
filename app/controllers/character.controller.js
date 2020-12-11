@@ -35,15 +35,9 @@ exports.create = (req, res) => {
     });
     return;
   }
-  else if (!req.body.player_id) {
+  else if (!req.body.user_id) {
     res.status(400).send({
-      message: "Character needs a player ID!"
-    });
-    return;
-  }
-  else if (!req.body.location_id) {
-    res.status(400).send({
-      message: "Character needs a location ID!"
+      message: "Character needs a user ID!"
     });
     return;
   }
@@ -55,8 +49,9 @@ exports.create = (req, res) => {
     level: req.body.level,
     status: req.body.status,
     stat_array: req.body.stat_array,
-    player_id: req.body.player_id,
-    location_id: req.body.location_id
+    user_id: req.body.user_id,
+    location_id: req.body.location_id,
+    approved: req.body.approved
   };
 
   // Save Character in the database
@@ -151,11 +146,48 @@ exports.delete = (req, res) => {
 };
 
 // Find all Characters of one Player
-exports.findAllOfPlayer = (req, res) => {
+exports.findAllOfUser = (req, res) => {
 
-  const player_id = req.params.player_id;
+  const user_id = req.params.user_id;
 
-  character.findAll({ where: { player_id: player_id } })
+  character.findAll({ where: { user_id: user_id } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving characters."
+      });
+    });
+};
+
+exports.findAllByApproved = (req, res) => {
+
+  const approved = req.params.approved;
+
+  character.findAll({ where: { approved: approved } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving characters."
+      });
+    });
+};
+
+exports.findAllByName = (req, res) => {
+
+
+  const character_name = req.params.character_name;
+
+  character.findAll({ where: { character_name: {
+      [Op.like]: '%' + character_name + '%'
+    }
+     }
+   })
     .then(data => {
       res.send(data);
     })

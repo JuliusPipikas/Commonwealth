@@ -1,7 +1,6 @@
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/user.controller");
 
-module.exports = function(app) {
+module.exports = app => {
   app.use(function(req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
@@ -10,23 +9,30 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
+  const users = require("../controllers/user.controller.js");
 
-  /*app.get(
-    "/api/test/user",
-    [authJwt.verifyToken],
-    controller.userBoard
-  );*/
+  var router = require("express").Router();
 
-  app.get(
-    "/api/test/user",
-    [authJwt.verifyToken, authJwt.isUser],
-    controller.userBoard
-  );
+  // Create a new Player
 
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  router.post("/", [authJwt.verifyToken, authJwt.isUser], users.create);
+
+  // Retrieve all Characters
+  router.get("/", [authJwt.verifyToken, authJwt.isUser], users.findAll);
+
+  // Retrieve all Characters of one player
+  
+  router.get("/ranks/:rank", [authJwt.verifyToken, authJwt.isUser], users.findAllOfRank);
+
+  // Retrieve a single Character with id
+  router.get("/:user_id", [authJwt.verifyToken, authJwt.isUser],  users.findOne);
+
+  // Update a Character with id
+  router.put("/:user_id", [authJwt.verifyToken, authJwt.isAdmin],  users.update);
+
+  // Delete a Character with id
+  router.delete("/:user_id", [authJwt.verifyToken, authJwt.isAdmin], users.delete);
+
+  app.use('/api/users', router);
+
 };

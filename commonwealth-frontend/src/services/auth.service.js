@@ -1,8 +1,10 @@
 import axios from "axios";
 import http from "../http-common";
+import authHeader from './auth-header';
 
-//const API_URL = "https://the-drumian-commonwealth.herokuapp.com/api/auth/";
-const API_URL = "/api/auth/";
+const API_URL = "https://the-drumian-commonwealth.herokuapp.com/api/auth/";
+//const API_URL = "/api/auth/";
+const USER_URL = "/api/users/";
 
 class AuthService {
   login(username, password) {
@@ -24,15 +26,19 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  register(username, password) {
+  register(username, password, discord_id) {
     return axios.post(API_URL + "signup", {
       username,
-      password
+      password,
+      discord_id,
+      role: 1,
+      rank: "Recruit",
+
     });
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return JSON.parse(localStorage.getItem('user'));
   }
 }
 

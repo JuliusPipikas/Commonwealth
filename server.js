@@ -6,8 +6,8 @@ const path = require('path');
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
-  //origin: "https://drumian-commonwealth.herokuapp.com/"
+  //origin: "http://localhost:8081"
+  origin: "https://drumian-commonwealth.herokuapp.com/"
 };
 
 app.use(cors(corsOptions));
@@ -32,7 +32,6 @@ if (req.method === 'GET' && req.accepts('html') && !req.is('json') &&
  });
 
 require("./app/routes/character.routes")(app);
-require("./app/routes/player.routes")(app);
 require("./app/routes/location.routes")(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);

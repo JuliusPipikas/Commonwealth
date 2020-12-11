@@ -12,7 +12,9 @@ exports.signup = (req, res) => {
   User.create({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 8),
-    role: req.body.role
+    role: req.body.role,
+    rank: req.body.rank,
+    discord_id: req.body.discord_id
     
   })
   .then(user => {

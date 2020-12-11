@@ -29,6 +29,16 @@ const vpassword = value => {
   if (value.length < 6 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
+        The Discord ID must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+const vdiscord_id = value => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
         The password must be between 6 and 40 characters.
       </div>
     );
@@ -41,10 +51,14 @@ export default class Register extends Component {
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeDiscordID = this.onChangeDiscordID.bind(this);
 
     this.state = {
       username: "",
       password: "",
+      discord_id: "",
+      role: 1,
+      rank: "Recruit",
       successful: false,
       message: ""
     };
@@ -62,6 +76,12 @@ export default class Register extends Component {
     });
   }
 
+  onChangeDiscordID(e){
+    this.setState({
+      discord_id: e.target.value
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -75,7 +95,8 @@ export default class Register extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
         this.state.username,
-        this.state.password
+        this.state.password,
+        this.state.discord_id
       ).then(
         response => {
           this.setState({
@@ -131,6 +152,18 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
+                  <label htmlFor="discord_id">Discord ID</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="discord_id"
+                    value={this.state.discord_id}
+                    onChange={this.onChangeDiscordID}
+                    validations={[required, vdiscord_id]}
+                  />
+                </div>
+
+                <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <Input
                     type="password"
@@ -143,7 +176,7 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                  <button className="btn btn-warning btn-block">Sign Up</button>
                 </div>
               </div>
             )}

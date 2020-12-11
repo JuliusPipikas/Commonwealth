@@ -26,11 +26,17 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      player_id: {
+      user_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       location_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      approved: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       }
     }
     ,{timestamps: false}

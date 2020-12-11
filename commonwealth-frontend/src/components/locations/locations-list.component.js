@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LocationDataService from "../../services/location.service";
 import { Link } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 export default class LocationsList extends Component {
   constructor(props) {
@@ -12,12 +13,23 @@ export default class LocationsList extends Component {
     this.state = {
       locations: [],
       currentLocationl: null,
-      currentIndex: -1
+      currentIndex: -1,
+      checkForAdmin: null,
+      user_id: null
     };
   }
 
   componentDidMount() {
     this.retrieveLocations();
+
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        user_id: user.user_id,
+        checkForAdmin: user.user_id == 2
+      });
+    }
   }
 
   retrieveLocations() {
@@ -49,8 +61,8 @@ export default class LocationsList extends Component {
   }
 
   render() {
-    const { locations, currentLocation, currentIndex } = this.state;
-
+    const { checkForAdmin, locations, currentLocation, currentIndex } = this.state;
+    if(checkForAdmin){
     return (
       <div className="list row">
         <div className="col-md-8">
@@ -73,6 +85,12 @@ export default class LocationsList extends Component {
                 </li>
               ))}
           </ul>
+
+          <Link to={"/addLocation"} className="nav-link">
+            <button className="btn btn-success">
+            Add Location
+            </button>
+          </Link>
         </div>
         <div className="col-md-6">
           {currentLocation ? (
@@ -102,4 +120,10 @@ export default class LocationsList extends Component {
       </div>
     );
   }
+  else{
+    return(
+    <h3>Admin Content</h3>
+    );
+  }
+}
 }

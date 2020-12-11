@@ -15,7 +15,16 @@ module.exports = (sequelize, Sequelize) => {
       role: {
         type: Sequelize.INTEGER,
         allowNull: false
+      },
+      discord_id: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      rank:{
+      type: Sequelize.STRING,
+      allowNull: false
       }
+
       
     },{timestamps: false});
   

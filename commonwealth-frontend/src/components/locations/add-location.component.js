@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LocationDataService from "../../services/location.service";
+import AuthService from "../../services/auth.service";
 
 export default class AddLocation extends Component {
   constructor(props) {
@@ -11,6 +12,8 @@ export default class AddLocation extends Component {
     this.state = {
       location_id: null,
       location_name: "",
+      checkForAdmin: null,
+      user_id: null,
 
       submitted: false
     };
@@ -51,7 +54,20 @@ export default class AddLocation extends Component {
     });
   }
 
+  componentDidMount() {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        user_id: user.user_id,
+        checkForAdmin: user.user_id == 2
+      });
+    }
+  }
+
   render() {
+    const { checkForAdmin } = this.state;
+    if(checkForAdmin){
     return (
       <div className="submit-form">
         {this.state.submitted ? (
@@ -83,4 +99,10 @@ export default class AddLocation extends Component {
       </div>
     );
   }
+  else{
+    return(
+    <h3>Admin Content</h3>
+    );
+  }
+}
 }

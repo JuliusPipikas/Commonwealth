@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CharacterDataService from "../../services/character.service";
+import AuthService from "../../services/auth.service";
 
 export default class Character extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export default class Character extends Component {
     this.onChangerStatus = this.onChangeStatus.bind(this);
     this.onChangeStatArray = this.onChangeStatArray.bind(this);
     this.onChangeLocationId = this.onChangeLocationId.bind(this);
-    this.onChangePlayerId = this.onChangePlayerId.bind(this);
+    this.onChangeUserId = this.onChangeUserId.bind(this);
+    this.onChangeApproved = this.onChangeApproved.bind(this);
     this.getCharacter = this.getCharacter.bind(this);
     this.updateCharacter = this.updateCharacter.bind(this);
     this.deleteCharacter = this.deleteCharacter.bind(this);
@@ -23,8 +25,11 @@ export default class Character extends Component {
       level: null,
       status: "",
       stat_array: "",
-      player_id: null,
+      user_id: null,
       location_id: null,
+      approved: null,
+      user_id: null,
+      checkForAdmin: null,
 
       submitted: false
       },
@@ -34,6 +39,14 @@ export default class Character extends Component {
 
   componentDidMount() {
     this.getCharacter(this.props.match.params.character_id);
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        user_id: user.user_id,
+        checkForAdmin: user.user_id == 2
+      });
+    }
   }
 
   onChangeCharacterName(e) {
@@ -114,14 +127,27 @@ export default class Character extends Component {
     });
   }
 
-  onChangePlayerId(e) {
-    const player_id = e.target.value;
+  onChangeUserId(e) {
+    const user_id = e.target.value;
 
     this.setState(function(prevState) {
       return {
         currentCharacter: {
           ...prevState.currentCharacter,
-          player_id: player_id
+          user_id: user_id
+        }
+      };
+    });
+  }
+
+  onChangeApproved(e) {
+    const approved = e.target.value;
+
+    this.setState(function(prevState) {
+      return {
+        currentCharacter: {
+          ...prevState.currentCharacter,
+          approved: approved
         }
       };
     });
@@ -169,8 +195,10 @@ export default class Character extends Component {
   }
 
   render() {
-    const { currentCharacter } = this.state;
+    const { currentCharacter, user_id, checkForAdmin } = this.state;
 
+    if(user_id == currentCharacter.user_id || checkForAdmin){
+    
     return (
       <div>
         {currentCharacter ? (
@@ -243,16 +271,31 @@ export default class Character extends Component {
                 />
               </div>
 
+              {checkForAdmin && (
               <div className="form-group">
-                <label htmlFor="palyer_id">Player</label>
+                <label htmlFor="user_id">Player</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="player_id"
-                  value={currentCharacter.player_id}
-                  onChange={this.onChangePlayerId}
+                  id="user_id"
+                  value={currentCharacter.user_id}
+                  onChange={this.onChangeUserId}
                 />
               </div>
+              )}
+
+              {checkForAdmin && (
+              <div className="form-group">
+                <label htmlFor="approved">Approved</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="approved"
+                  value={currentCharacter.approved}
+                  onChange={this.onChangeApproved}
+                />
+              </div>
+              )}
 
             </form>
 
@@ -281,4 +324,10 @@ export default class Character extends Component {
       </div>
     );
   }
+  else{
+    return(
+    <h3>Can't edit others' characters :\</h3>
+    );
+  }
+}
 }

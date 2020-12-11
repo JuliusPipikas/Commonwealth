@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import AuthService from "../../services/auth.service";
 import CharacterDataService from "../../services/character.service";
+import LocationDataService from "../../services/location.service";
 
 export default class AddCharacter extends Component {
   constructor(props) {
@@ -10,7 +12,8 @@ export default class AddCharacter extends Component {
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onChangeStatArray = this.onChangeStatArray.bind(this);
     this.onChangeLocationId = this.onChangeLocationId.bind(this);
-    this.onChangePlayerId = this.onChangePlayerId.bind(this);
+    this.onChangeUserId = this.onChangeUserId.bind(this);
+    this.onChangeApproved = this.onChangeApproved.bind(this);
     this.saveCharacter = this.saveCharacter.bind(this);
     this.newCharacter = this.newCharacter.bind(this);
 
@@ -19,13 +22,33 @@ export default class AddCharacter extends Component {
       character_name: "",
       character_class: "",
       level: null,
-      status: "",
+      status: "Alive",
       stat_array: "",
-      player_id: null,
-      location_id: null,
+      user_id: null,
+      location_id: 0,
+      approved: 0,
+      checkForAdmin: null,
+      locations: [],
 
       submitted: false
     };
+  }
+
+  componentDidMount() {
+
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        user_id: user.user_id,
+        checkForAdmin: user.user_id == 2
+      });
+    }
+
+    LocationDataService.getAll().then( response => { this.setState({
+      locations: response.data
+    })
+    })
   }
 
   onChangeCharacterName(e) {
@@ -64,9 +87,15 @@ export default class AddCharacter extends Component {
     });
   }
 
-  onChangePlayerId(e) {
+  onChangeUserId(e) {
     this.setState({
-      player_id: e.target.value
+      user_id: e.target.value
+    });
+  }
+
+  onChangeApproved(e){
+    this.setState({
+      approved: e.target.value
     });
   }
 
@@ -74,12 +103,22 @@ export default class AddCharacter extends Component {
     var data = {
       character_name: this.state.character_name,
       character_class: this.state.character_class,
-      level: this.state.level,
+      level: parseInt(this.state.level),
       status: this.state.status,
       stat_array: this.state.stat_array,
       location_id: this.state.location_id,
-      player_id: this.state.player_id
+      user_id: this.state.user_id,
+      approved: this.state.approved,
     };
+
+    console.log(this.state.character_name);
+    console.log(this.state.character_class);
+    console.log(this.state.level);
+    console.log(this.state.status);
+    console.log(this.state.stat_array);
+    console.log(this.state.location_id);
+    console.log(this.state.user_id);
+    console.log(this.state.approved);
 
     CharacterDataService.create(data)
       .then(response => {
@@ -90,8 +129,9 @@ export default class AddCharacter extends Component {
           level: response.data.level,
           status: response.data.status,
           stat_array: response.data.stat_array,
-          location_id: response.data.location_id,
-          player_id: response.data.player_id,
+          location_id: response.data.stat_array,
+          user_id: response.data.stat_array,
+          approved: response.data.approved,
 
           submitted: true
         });
@@ -107,18 +147,25 @@ export default class AddCharacter extends Component {
       character_id: null,
       character_name: "",
       character_class: "",
-      level: null,
-      status: "",
+      level: 1,
+      status: "Alive",
       stat_array: "",
-      player_id: null,
-      location_id: null,
+      user_id: null,
+      location_id: 0,
+      approved: 0,
+      checkForAdmin: null,
+      locations: [],
 
       submitted: false
     });
   }
 
   render() {
+
+    const { checkForAdmin, locations } = this.state;
+
     return (
+
       <div className="submit-form">
         {this.state.submitted ? (
           <div>
@@ -139,6 +186,7 @@ export default class AddCharacter extends Component {
                 value={this.state.character_name}
                 onChange={this.onChangeCharacterName}
                 name="character_name"
+                placeholder="Your character's name"
               />
             </div>
 
@@ -152,33 +200,36 @@ export default class AddCharacter extends Component {
                 value={this.state.character_class}
                 onChange={this.onChangeCharacterClass}
                 name="character_class"
+                placeholder="Your character's class"
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="level">Level</label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="level"
                 required
                 value={this.state.level}
                 onChange={this.onChangeLevel}
                 name="level"
+                min="1"
+                max="20"
+                placeholder="Your character's level"
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="status">Status</label>
-              <input
-                type="text"
-                className="form-control"
-                id="status"
-                required
-                value={this.state.status}
+              <select className="form-control" id="status" required value={this.state.status}
                 onChange={this.onChangeStatus}
                 name="status"
-              />
+                placeholder="Your character's current status">
+              <option value= "Alive">Alive</option>
+              <option value= "Retired">Retired</option>
+              <option value= "Deceased">Deceased</option>
+            </select>
             </div>
 
             <div className="form-group">
@@ -191,34 +242,37 @@ export default class AddCharacter extends Component {
                 value={this.state.stat_array}
                 onChange={this.onChangeStatArray}
                 name="stat_array"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="player_id">Player</label>
-              <input
-                type="text"
-                className="form-control"
-                id="player_id"
-                required
-                value={this.state.player_id}
-                onChange={this.onChangePlayerId}
-                name="player_id"
+                placeholder="Ex. 11, 11, 11, 11, 11, 11"
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="location_id">Location</label>
+              <select className="form-control" id="location_id" required value={this.state.location_id}
+                onChange={this.onChangeLocationId}
+                name="location_id"
+                placeholder="Your character's current location">
+              {locations.map((location, index) => (
+                <option value={location.location_id} key={index}>{location.location_name}</option>
+              ))}
+            </select>
+            </div>
+                
+            {checkForAdmin && (
+            <div className="form-group">
+              <label htmlFor="user_id">User</label>
               <input
                 type="text"
                 className="form-control"
-                id="location_id"
+                id="user_id"
                 required
-                value={this.state.location_id}
-                onChange={this.onChangeLocationId}
-                name="location_id"
+                value={this.state.user_id}
+                onChange={this.onChangeUserId}
+                name="user_id"
+                placeholder="[ADMIN FIELD] User"
               />
             </div>
+            )}
 
             <button onClick={this.saveCharacter} className="btn btn-success">
               Submit
